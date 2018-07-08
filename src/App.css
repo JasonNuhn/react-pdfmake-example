@@ -20,8 +20,13 @@
 
 .App-intro {
   font-size: large;
+  background-color:#ff8000
 }
 
+.Button {
+  background-color: #F8F8FF;
+  color: #000000;
+}
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

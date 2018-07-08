@@ -11,6 +11,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      dateInput: '',
       projName: '',
       projMan: '',
       projManEmail: '',
@@ -19,9 +20,19 @@ class App extends React.Component {
       custEmail: '',
       custPhone: '',
       summary: '',
-
+      arrivalTime: '',
+      finishedTime: '',
+      taskOneInput: '',
+      taskTwoInput: '',
+      taskThreeInput: '',
+      taskFourInput: '',
+      taskOneDone: false,
+      taskTwoDone: false,
+      taskThreeDone: false,
+      taskFourDone: false,
     };
 
+    this.handleChangeDateInput = this.handleChangeDateInput.bind(this);
     this.handleChangeProjName = this.handleChangeProjName.bind(this);
     this.handleChangeProjMan = this.handleChangeProjMan.bind(this);
     this.handleChangeProjManEmail = this.handleChangeProjManEmail.bind(this);
@@ -30,7 +41,21 @@ class App extends React.Component {
     this.handleChangeCustEmail = this.handleChangeCustEmail.bind(this);
     this.handleChangeCustPhone = this.handleChangeCustPhone.bind(this);
     this.handleChangeSummary = this.handleChangeSummary.bind(this);
+    this.handleChangeArrivalTime = this.handleChangeArrivalTime.bind(this);
+    this.handleChangeFinishedTime = this.handleChangeFinishedTime.bind(this);
+    this.handleChangeTaskOneInput = this.handleChangeTaskOneInput.bind(this);
+    this.handleChangeTaskTwoInput = this.handleChangeTaskTwoInput.bind(this);
+    this.handleChangeTaskThreeInput = this.handleChangeTaskThreeInput.bind(this);
+    this.handleChangeTaskFourInput = this.handleChangeTaskFourInput.bind(this);
+    this.handleChangeTaskOneDone = this.handleChangeTaskOneDone.bind(this);
+    this.handleChangeTaskTwoDone = this.handleChangeTaskTwoDone.bind(this);
+    this.handleChangeTaskThreeDone = this.handleChangeTaskThreeDone.bind(this);
+    this.handleChangeTaskFourDone = this.handleChangeTaskFourDone.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChangeDateInput(event) {
+    this.setState({dateInput: event.target.value});
   }
 
   handleChangeProjName(event) {
@@ -65,8 +90,49 @@ class App extends React.Component {
     this.setState({summary: event.target.value});
   }
 
+  handleChangeArrivalTime(event) {
+    this.setState({arrivalTime: event.target.value});
+  }
+
+  handleChangeFinishedTime(event) {
+    this.setState({finishedTime: event.target.value});
+  }
+
+  handleChangeTaskOneInput(event) {
+    this.setState({taskOneInput: event.target.value});
+  }
+
+  handleChangeTaskTwoInput(event) {
+    this.setState({taskTwoInput: event.target.value});
+  }
+
+  handleChangeTaskThreeInput(event) {
+    this.setState({taskThreeInput: event.target.value});
+  }
+
+  handleChangeTaskFourInput(event) {
+    this.setState({taskFourInput: event.target.value});
+  }
+
+  handleChangeTaskOneDone(event) {
+    this.setState({taskOneDone: event.target.value});
+  }
+
+  handleChangeTaskTwoDone(event) {
+    this.setState({taskTwoDone: event.target.value});
+  }
+
+  handleChangeTaskThreeDone(event) {
+    this.setState({taskThreeDone: event.target.value});
+  }
+
+  handleChangeTaskFourDone(event) {
+    this.setState({taskFourDone: event.target.value});
+  }
+
+
   handleSubmit(event) {
-    alert('PDF report has been created.  Please click OK');
+    alert('PDF report has been created.  Please click Close');
     // console.log('A name was submitted: ' + this.state.ProjName + this.state.projMan)
     // event.preventDefault();
   }
@@ -84,13 +150,15 @@ class App extends React.Component {
       pageSize: 'A4',
       pageOrientation: 'portrait',
       content: [
-        {
-          image: image,
-          fit: [100, 100],
-          // pageBreak: 'after'
-        },
+        // {
+        //   image: image,
+        //   fit: [100, 100],
+        //   // pageBreak: 'after'
+        // },
         {text: 'Project Status Update', fontSize: 20, alignment: 'center'},
-        {text: 'Updated Project Status As Of: <dd-mm-yy>', fontSize: 15, alignment: 'center'},
+        {text: 'Updated Project Status As Of: '+this.state.dateInput, fontSize: 15, alignment: 'center'},
+        {text: 'Arrival Time: '+this.state.arrivalTime, fontSize: 15, alignment: 'center'},
+        {text: 'Finished Time: '+this.state.finishedTime, fontSize: 15, alignment: 'center'},
         '\n',
         {
           style: 'tableExample',
@@ -115,8 +183,9 @@ class App extends React.Component {
             // headerRows: 1,
             dontBreakRows: true,
             heights: [20, 70],
+            widths: [100, '*'],
             body: [
-              [{text: 'Overall Progress', fontSize: 15, width: 100}, {text: this.state.summary, colSpan: 3, fontSize: 12, width: 400}, {}, {}],
+              [{text: 'Overall Progress', fontSize: 15}, {text: this.state.summary, fontSize: 12}],
               // ...formattedData,
             ]
           }
@@ -127,15 +196,13 @@ class App extends React.Component {
           table: {
             // headerRows: 1,
             dontBreakRows: true,
-            widths: [50, 250, 80, 100],
+            widths: [100, '*', 100],
             body: [
-              [{text: 'TaskID', bold: 'true', fontSize: 12}, {text: 'Task Description', fontSize: 12, bold: 'true'}, {text: 'Completed On', fontSize: 12, bold: 'true'}, {text: 'Completed By', fontSize: 12, bold: 'true'}],
-              [{text: '1', bold: 'true', fontSize: 12}, {text: ''}, {text: ''}, {text: ''}],
-              [{text: '2', bold: 'true', fontSize: 12}, {text: ''}, {text: ''}, {text: ''}],
-              [{text: '3', bold: 'true', fontSize: 12}, {text: ''}, {text: ''}, {text: ''}],
-              [{text: '4', bold: 'true', fontSize: 12}, {text: ''}, {text: ''}, {text: ''}],
-              [{text: '5', bold: 'true', fontSize: 12}, {text: ''}, {text: ''}, {text: ''}],
-              [{text: '6', bold: 'true', fontSize: 12}, {text: ''}, {text: ''}, {text: ''}],
+              [{text: 'TaskID', bold: 'true', fontSize: 12}, {text: 'Outstanding Tasks', fontSize: 12, bold: 'true'}, {text: 'Completed?', fontSize: 12, bold: 'true'}],
+              [{text: '1', bold: 'true', fontSize: 12}, {text: this.state.taskOneInput}, {text: this.state.taskOneDone}],
+              [{text: '2', bold: 'true', fontSize: 12}, {text: this.state.taskTwoInput}, {text: this.state.taskTwoDone}],
+              [{text: '3', bold: 'true', fontSize: 12}, {text: this.state.taskThreeInput}, {text: this.state.taskThreeDone}],
+              [{text: '4', bold: 'true', fontSize: 12}, {text: this.state.taskFourInput}, {text: this.state.taskFourDone}],
               // ...formattedData,
             ]
           }
@@ -169,7 +236,15 @@ class App extends React.Component {
 
   render() {
     return (
+      <div className="App-intro">
+      <h2>Project Status Update</h2>
       <form onSubmit={this.handleSubmit}>
+       <label>
+          Date:
+          <br />
+          <input type="text" placeholder={'mm-dd-yy'} value={this.state.dateInput} onChange={this.handleChangeDateInput} />
+        </label>
+        <br />
         <label>
           Project Name:
           <br />
@@ -218,10 +293,55 @@ class App extends React.Component {
           <Textarea type="text" placeholder={'State the current progress of the project'} value={this.state.summary} onChange={this.handleChangeSummary} />
         </label>
         <br />
-        <button onClick={this._exportPdfTable}>
+        <label>
+          Arrival Time:
+          <br />
+          <input type="text" placeholder={'hh:mm am/pm'} value={this.state.arrivalTime} onChange={this.handleChangeArrivalTime} />
+        </label>
+        <br />
+        <label>
+          Finished Time:
+          <br />
+          <input type="text" placeholder={'hh:mm am/pm'} value={this.state.finishedTime} onChange={this.handleChangeFinishedTime} />
+        </label>
+        <br />
+        <label>
+          Outstanding Task #1:
+          <br />
+          <input type="text" placeholder={'Task #1'} value={this.state.taskOneInput} onChange={this.handleChangeTaskOneInput} />
+          Completed?
+          <input type="checkbox" checked={this.state.taskOneDone} value={true} onChange={this.handleChangeTaskOneDone} />
+        </label>
+        <br />
+        <label>
+          Outstanding Task #2:
+          <br />
+          <input type="text" placeholder={'Task #2'} value={this.state.taskTwoInput} onChange={this.handleChangeTaskTwoInput} />
+          Completed?
+          <input type="checkbox" checked={this.state.taskTwoDone} value={true} onChange={this.handleChangeTaskTwoDone} />
+        </label>
+        <br />
+        <label>
+          Outstanding Task #3:
+          <br />
+          <input type="text" placeholder={'Task #3'} value={this.state.taskThreeInput} onChange={this.handleChangeTaskThreeInput} />
+          Completed?
+          <input type="checkbox" checked={this.state.taskThreeDone} value={true} onChange={this.handleChangeTaskThreeDone} />
+        </label>
+        <br />
+        <label>
+          Outstanding Task #4:
+          <br />
+          <input type="text" placeholder={'Task #4'} value={this.state.taskFourInput} onChange={this.handleChangeTaskFourInput} />
+          Completed?
+          <input type="checkbox" checked={this.state.taskFourDone} value={true} onChange={this.handleChangeTaskFourDone} />
+        </label>
+        <br />
+        <button className="Button" onClick={this._exportPdfTable}>
             Export PDF
         </button>
       </form>
+      </div>
     );
   }
 }
